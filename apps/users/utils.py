@@ -1,4 +1,5 @@
 from django.contrib.auth.backends import ModelBackend
+from django.http import FileResponse
 
 from .models import UserProfile
 
@@ -17,3 +18,10 @@ class UsernameModelAuthBackend(ModelBackend):
         user = UserProfile.objects.get(username)
         if user is not None and user.check_password(password):
             return user
+# 文件下载功能
+def download(request):
+    file=open('static/1.txt','rb')
+    response =FileResponse(file)
+    response['Content-Type']='application/octet-stream'
+    response['Content-Disposition']='attachment;filename="1.txt"'
+    return response

@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_filters',
 
     'users.apps.UsersConfig',
+    'img.apps.ImgConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,10 +58,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'hrm.urls'
 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -84,8 +87,7 @@ DATABASES = {
         'NAME': "test",
         'USER': 'root',
         'PASSWORD': "mysql",
-        'HOST': "10.1.4.92",
-        # 'HOST': "192.168.43.234",
+        'HOST': "10.1.2.211",
         'PORT':3306
     }
 }
@@ -128,7 +130,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')     #设置静态文件路径为主目录下的media文件夹
+MEDIA_URL = '/media/'
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES':(
 #         'rest_framework_jwt.authentication.JSONWEBTokenAuthentication',
@@ -139,14 +142,16 @@ STATIC_URL = '/static/'
 # JWT_AUTH = {
 #     'JWT_EXPIRATION_DELTA':datetime.timedelta(days=1)
 # }
-AUTHENTICATION_BACKENDS = [
-    'users.utils.UsernameModelAuthBackend',
-]
+
+# 自定义认证后端
+# AUTHENTICATION_BACKENDS = [
+#     'users.utils.UsernameModelAuthBackend',
+# ]
 
 # 设置缓存
-REST_FRAMEWORK_EXTENSIONS = {
-    # 缓存时间
-    'DEFAULT_CACHE_RESPONSE_TIMEOUT':60,
-    # 存储位置
-    'DEFAULT_USE_CACHE':'default',
-}
+# REST_FRAMEWORK_EXTENSIONS = {
+#     # 缓存时间
+#     'DEFAULT_CACHE_RESPONSE_TIMEOUT':60,
+#     # 存储位置
+#     'DEFAULT_USE_CACHE':'default',
+# }
